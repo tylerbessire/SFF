@@ -1,0 +1,10 @@
+numpy
+selenium
+webdriver-manager
+pdfrw
+chardet
+pandas
+openpyxl
+Pillow
+ttkbootstrap
+python-docx
