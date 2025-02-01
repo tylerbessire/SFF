@@ -1,4 +1,5 @@
 import re
+import logging
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
@@ -6,18 +7,22 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException, NoSuchElementException
-import logging
+from webdriver_manager.chrome import ChromeDriverManager
 
 class BusinessScraper:
     def __init__(self):
-        self.driver = None
-
-    def setup_driver(self):
         chrome_options = Options()
         chrome_options.add_argument("--headless")
-        
-        # Use the path to the manually downloaded ChromeDriver
-        self.driver = webdriver.Chrome(service=Service('/Users/tylerbessire/drivers/chromedriver/chromedriver'), options=chrome_options)
+        from webdriver_manager.chrome import ChromeDriverManager
+        self.driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=chrome_options)
+
+    def setup_driver(self):
+        """Initialize the driver if it was closed"""
+        if not self.driver:
+            chrome_options = Options()
+            chrome_options.add_argument("--headless")
+            from webdriver_manager.chrome import ChromeDriverManager
+            self.driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=chrome_options)
 
     def scrape_business(self, business_name, city):
         search_variations = self.generate_search_variations(business_name)

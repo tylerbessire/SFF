@@ -7,6 +7,8 @@ from ttkbootstrap import Style
 import openpyxl
 import docx
 import csv
+from scraper import BusinessScraper
+from pdf_filler import PDFFiller
 
 def read_input_file(file_path):
     _, file_extension = os.path.splitext(file_path)
@@ -68,24 +70,24 @@ class ModernGUI:
 
         ttk.Label(file_frame_inner, text="Input File:", font=("Arial", 12, "bold")).grid(column=0, row=0, sticky=tk.W, pady=10)
         self.input_entry = ttk.Entry(file_frame_inner, width=70, font=("Arial", 12))
-        self.input_entry.grid(column=1, row=0, sticky=(tk.W, tk.E), pady=10)
+        self.input_entry.grid(column=1, row=0, sticky="we", pady=10)
         ttk.Button(file_frame_inner, text="Browse", command=self.browse_input, style='warning.TButton').grid(column=2, row=0, padx=10, pady=10)
 
         ttk.Label(file_frame_inner, text="PDF Template:", font=("Arial", 12, "bold")).grid(column=0, row=1, sticky=tk.W, pady=10)
         self.template_entry = ttk.Entry(file_frame_inner, width=70, font=("Arial", 12))
-        self.template_entry.grid(column=1, row=1, sticky=(tk.W, tk.E), pady=10)
+        self.template_entry.grid(column=1, row=1, sticky="we", pady=10)
         ttk.Button(file_frame_inner, text="Browse", command=self.browse_template, style='warning.TButton').grid(column=2, row=1, padx=10, pady=10)
 
         ttk.Label(file_frame_inner, text="Output Folder:", font=("Arial", 12, "bold")).grid(column=0, row=2, sticky=tk.W, pady=10)
         self.output_entry = ttk.Entry(file_frame_inner, width=70, font=("Arial", 12))
-        self.output_entry.grid(column=1, row=2, sticky=(tk.W, tk.E), pady=10)
+        self.output_entry.grid(column=1, row=2, sticky="we", pady=10)
         ttk.Button(file_frame_inner, text="Browse", command=self.browse_output, style='warning.TButton').grid(column=2, row=2, padx=10, pady=10)
 
         self.start_button = ttk.Button(file_frame_inner, text="Start Scraping", command=self.start_scraping, style='success.TButton')
         self.start_button.grid(column=1, row=3, pady=20)
 
         self.progress = ttk.Progressbar(file_frame_inner, orient=tk.HORIZONTAL, length=500, mode='determinate', style='warning.Horizontal.TProgressbar')
-        self.progress.grid(column=0, row=4, columnspan=3, sticky=(tk.W, tk.E), pady=10)
+        self.progress.grid(column=0, row=4, columnspan=3, sticky="we", pady=10)
 
     def create_manual_entry_widgets(self):
         manual_frame = ttk.Frame(self.manual_entry_frame, style='TFrame', padding="10 10 10 10")
@@ -93,21 +95,21 @@ class ModernGUI:
 
         ttk.Label(manual_frame, text="Account Number:", font=("Arial", 12, "bold")).grid(column=0, row=0, sticky=tk.W, pady=5)
         self.account_entry = ttk.Entry(manual_frame, width=30, font=("Arial", 12))
-        self.account_entry.grid(column=1, row=0, sticky=(tk.W, tk.E), pady=5)
+        self.account_entry.grid(column=1, row=0, sticky="we", pady=5)
 
         ttk.Label(manual_frame, text="Client:", font=("Arial", 12, "bold")).grid(column=0, row=1, sticky=tk.W, pady=5)
         self.client_entry = ttk.Entry(manual_frame, width=30, font=("Arial", 12))
-        self.client_entry.grid(column=1, row=1, sticky=(tk.W, tk.E), pady=5)
+        self.client_entry.grid(column=1, row=1, sticky="we", pady=5)
 
         ttk.Label(manual_frame, text="City:", font=("Arial", 12, "bold")).grid(column=0, row=2, sticky=tk.W, pady=5)
         self.city_entry = ttk.Entry(manual_frame, width=30, font=("Arial", 12))
-        self.city_entry.grid(column=1, row=2, sticky=(tk.W, tk.E), pady=5)
+        self.city_entry.grid(column=1, row=2, sticky="we", pady=5)
 
         self.add_account_button = ttk.Button(manual_frame, text="Add Account", command=self.add_manual_account, style='success.TButton')
         self.add_account_button.grid(column=1, row=3, pady=20)
 
         self.manual_accounts_list = tk.Listbox(manual_frame, width=50, height=10, font=("Arial", 12))
-        self.manual_accounts_list.grid(column=0, row=4, columnspan=2, sticky=(tk.W, tk.E), pady=10)
+        self.manual_accounts_list.grid(column=0, row=4, columnspan=2, sticky="we", pady=10)
 
         self.remove_account_button = ttk.Button(manual_frame, text="Remove Selected Account", command=self.remove_manual_account, style='danger.TButton')
         self.remove_account_button.grid(column=1, row=5, pady=10)
@@ -131,12 +133,12 @@ class ModernGUI:
             ttk.Label(additional_frame, text=field + ':', font=("Arial", 10, "bold")).grid(column=col, row=row, sticky=tk.W, pady=5, padx=5)
             var = tk.StringVar()
             entry = ttk.Entry(additional_frame, textvariable=var, width=30, font=("Arial", 10))
-            entry.grid(column=col+1, row=row, sticky=(tk.W, tk.E), pady=5, padx=5)
+            entry.grid(column=col+1, row=row, sticky="we", pady=5, padx=5)
             self.additional_info[field] = var
 
         # Checkboxes
         checkbox_frame = ttk.Frame(additional_frame, style='TFrame', padding="10 10 10 10")
-        checkbox_frame.grid(column=0, row=len(text_fields)//2 + 1, columnspan=4, sticky=(tk.W, tk.E))
+        checkbox_frame.grid(column=0, row=len(text_fields)//2 + 1, columnspan=4, sticky="we")
 
         self.checkbox_fields = {
             "New Account": "New Account",
