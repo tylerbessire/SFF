@@ -1,0 +1,4 @@
+BUSINESS_NAME,LICENSE_NUMBER,STREET,CITY,STATE,ZIP_CODE,New Account,Phone Number,Market Type Bar,Credit Application Yes,PRIMARY_OWNER,Special Instructions,Monday,Wednesday,Friday
+ABC Bar & Grill,12345,123 Main St,Sacramento,CA,95814,true,916-555-1234,true,true,John Smith,Delivery after 2pm,true,true,false
+XYZ Lounge,67890,456 Oak Ave,San Francisco,CA,94102,true,415-555-5678,true,true,Jane Doe,Call before delivery,false,true,true
+123 Pub,11111,789 Pine St,Los Angeles,CA,90012,true,213-555-9012,true,true,Bob Johnson,Weekend deliveries only,true,false,true

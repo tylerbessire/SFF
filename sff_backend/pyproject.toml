@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "sff-backend"
+version = "0.1.0"
+description = "Saccani Form Filler Backend"
+authors = ["Devin"]
+package-mode = false
+
+[tool.poetry.dependencies]
+python = "^3.12"
+fastapi = {extras = ["all"], version = "^0.115.8"}
+uvicorn = "^0.34.0"
+
+[tool.poetry.scripts]
+start = "python -m uvicorn app.main:app --host 0.0.0.0 --port 8000"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
